@@ -15,6 +15,82 @@ router.get('/students', function (req, res){
     res.send(students)
 })
 
+router.get('/movies',function (req,res) {
+       let movies = ['KGF', 'VIKRAM','BAHUBALLI','JAB WE MET']
+       res.send(movies)
+       console.log(movies)
+})
+
+router.get ('/movies/:indexNumber', (req,res) => {
+    const myMovies = ['KGF', 'VIKRAM','BAHUBALLI','JAB WE MET'];
+    let indexOfMovie = + (req.params.indexNumber)
+    console.log( indexOfMovie)
+
+    if (indexOfMovie < 0 || indexOfMovie > myMovies.length){
+        res.send("please insert valid index")
+    }
+    else{
+        res.send(myMovies[indexOfMovie])
+    }
+ })
+// router.get('GET /films/:indexNumber',function(req,res))
+
+router.get('/films', function(req, res){
+    let films = [{
+        "id": 1,
+        "name": "KGF"
+       }, {
+        "id": 2,
+        "name": "VIKRAM"
+       }, {
+        "id": 3,
+        "name": "BAHUBALLI"
+       }, {
+        "id": 4,
+        "name": "JUJUTSU KAISAN"
+       }]
+        
+       console.log(films)
+        res.send(films);
+    })
+     
+    
+    router.get('/Films/:id', function(req, res){
+        let films = [{
+            "id": 1,
+            "name": "NARUTO"
+           }, {
+            "id": 2,
+            "name": "ONE PIECE"
+           }, {
+            "id": 3,
+            "name": "DEMON SLAYER"
+           }, {
+            "id": 4,
+            "name": "HUNTER X HUNTER"
+           }]
+    
+         let result = req.params.id
+         result1 = result -1
+        // let i = req.params.indexNumber;
+       if(result <= films.length){
+            res.send(films[result1])
+    }else {
+        res.send("WHAT THE HELL MAN! , THERE IS NO MOVIE WITH THIS ID")
+    }
+           
+    })
+
+
+
+// })
+
+    // for(let i=0; i<movies.length;i++){
+    //     console.log(movies[i])
+    // }
+    //    res.send(movies)
+
+
 router.get('/student-details/:name', function(req, res){
     /*
     params is an attribute inside request that contains 
