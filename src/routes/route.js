@@ -70,4 +70,75 @@ router.post("/test-post-4", function(req, res) {
     res.send(  { msg: arr , status: true }  )
 })
 
+let players =
+   [
+       {
+           "name": "manish",
+           "dob": "1/1/1995",
+           "gender": "male",
+           "city": "jalandhar",
+           "sports": [
+               "swimming"
+           ]
+       },
+       {
+           "name": "gopal",
+           "dob": "1/09/1995",
+           "gender": "male",
+           "city": "delhi",
+           "sports": [
+               "soccer"
+           ]
+       },
+       {
+           "name": "lokesh",
+           "dob": "1/1/1990",
+           "gender": "male",
+           "city": "mumbai",
+           "sports": [
+               "soccer"
+           ]
+       },
+   ]
+
+
+   router.post('/players',function(req,res) {
+        
+       let myNewPlayer=req.body
+       let myNewPlayerName= myNewPlayer.name
+       let isNameRepeated=false
+   
+       for(i=0;i<players.length;i++) {
+           if(players[i].name == myNewPlayerName ){
+                isNameRepeated = true
+                break;
+           }
+    }
+    
+       if(isNameRepeated ){
+        res.send("MAN!, this player is already there") 
+
+
+       }else{
+        players.push(myNewPlayer)
+        res.send(players)
+       }
+
+   })
+
+
+
+
+   let arr = [ 23,43,54,65,6,7,87,98,45657,3456,655734,6,988]
+   router.post('/post-query2', function(req,res){
+
+
+
+       
+    res.send({data: finalarr,status:true })
+
+
+   })
+
+
 module.exports = router;
