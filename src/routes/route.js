@@ -133,12 +133,70 @@ let players =
    router.post('/post-query2', function(req,res){
 
 
-
-       
     res.send({data: finalarr,status:true })
 
-
    })
+
+
+   
+let persons= [
+  {
+  name: "ADESH",
+  age: 20,
+  votingStatus: false
+},
+{
+  name: "ROSHNI",
+  age: 25,
+  votingStatus: false
+},
+{
+  name: "JYOTI",
+  age: 23,
+  votingStatus: false
+},
+{
+  name: "PIYUSH",
+  age: 25,
+  votingStatus: false
+},
+{
+    name: "SHIVANSHI",
+    age: 22,
+    votingStatus: false
+},
+{
+    name : "GOL.D.ROGER",
+    age: 80,
+    votingStatus: false
+},
+{
+  name: "NIKHIL",
+  age: 40,
+  votingStatus: false
+}
+]
+
+router.post('/voters', function(req,res) {
+
+    let param = req.query;
+    let age = param.age;
+    let voterArray = [];
+    
+
+   for(let i =0; i < persons.length ; i++){
+      if(persons[i].age >= age){
+           persons[i].votingStatus = true
+          voterArray.push(persons[i])  
+      }
+   }
+
+  res.send(voterArray)
+          
+})
+
+
+
 
 
 module.exports = router;
