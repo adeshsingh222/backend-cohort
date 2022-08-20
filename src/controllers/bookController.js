@@ -1,22 +1,51 @@
-const { count } = require("console")
+// const { count } = require("console")
 const BookModel= require("../models/bookModel")
-// hello bro
-const createBook= async function (req, res) {
-    let data= req.body
+const authorModel= require("../models/authorModel")
 
-    let savedData= await BookModel.create(data)
+const createNewBook= async (req, res) =>{
+    let bookData= req.body
+    let authorId= bookData.author_id
+    if(!authorId){
+        return res.send({msg: "Author Id is mandatory"})
+    }
+    let savedData= await BookModel.create(bookData)
     res.send({msg: savedData})
 }
 
-const getBooksData= async function (req, res) {
+const createNewAuthor= async (req,res) =>{
+    let authorData= req.body
+    let data= await authorModel.create(authorData)
+    res.send({msg: data})
+}
+
+const getBooksData= async  (req, res) => {
     let allBooks= await BookModel.find( {authorName : "HO" } )
     console.log(allBooks)
     if (allBooks.length > 0 )  res.send({msg: allBooks, condition: true})
     else res.send({msg: "No books found" , condition: false})
 }
 
+const booksByChetanBhagat= async (req,res) =>{
+    let name= await BookModel.find({ author_name: "Chetan Bhagat", author_id: 1 })
+    res.send({ msg: name})
+}
 
-const updateBooks= async function (req, res) {
+const twoStates= async (req,res) =>{
+    let newName= await BookModel.findOneAndUpdate({ name: "Two states"},{$set: {price: 100}})
+    let value = newName.author_id
+    let price = newName.price
+    let newData = await authorModel.find({ author_id: value}).select({author_name: 1, price: 1})
+    res.send({msg: price, newData})
+}
+
+const findAuthor = async (req,res) =>{
+    let books= await BookModel.find( { price : { $gte: 50, $lte: 100} } )
+    let newBooks= books.map(x=>x.author_id)
+    let finalBooks= await authorModel.find({author_id: newBooks}).select({author_name : 1, _id : 0})
+    res.send({ msg: finalBooks})
+}
+
+const updateBooks= async (req, res) => {
     let data = req.body // {sales: "1200"}
     // let allBooks= await BookModel.updateMany( 
     //     { author: "SK"} , //condition
@@ -31,7 +60,7 @@ const updateBooks= async function (req, res) {
      res.send( { msg: allBooks})
 }
 
-const deleteBooks= async function (req, res) {
+const deleteBooks= async  (req, res)  => {
     // let data = req.body 
     let allBooks= await BookModel.updateMany( 
         { authorName: "FI"} , //condition
@@ -53,7 +82,11 @@ const deleteBooks= async function (req, res) {
 
 
 
-module.exports.createBook= createBook
+module.exports.findAuthor= findAuthor
+module.exports.twoStates= twoStates
+module.exports.booksByChetanBhagat= booksByChetanBhagat
+module.exports.createNewAuthor= createNewAuthor
+module.exports.createNewBook= createNewBook
 module.exports.getBooksData= getBooksData
 module.exports.updateBooks= updateBooks
 module.exports.deleteBooks= deleteBooks
