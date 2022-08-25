@@ -9,7 +9,9 @@ router.get("/test-me", function (req, res) {
     res.send("My first ever api!")
 })
 
-
+router.get("/assign", (req,res) =>{
+    res.send("My assignment is done")
+})
 
 
 router.post("/createBook", BookController.createBook  )
