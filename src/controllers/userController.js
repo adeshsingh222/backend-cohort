@@ -163,8 +163,3 @@ module.exports.loginUser = loginUser;
 module.exports.postMessage  = postMessage ;
 module.exports.deleteUser = deleteUser;
 
-
-
-
-
-
